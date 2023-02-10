@@ -1,14 +1,11 @@
-import "./App.css";
-import { Practice } from "./Component/ComponentLevel/Practice";
-import { PrompComp2_1 } from "./Component/ComponentLevel/PrompComp2_1";
-import { PropsComp1_1 } from "./Component/ComponentLevel/PropsComp1_1";
+import React from "react";
+import { NavBar } from "./Component/ComponentLevel/nav/NavBar";
+
 
 function App() {
   return (
-    <div className="App">
-      <Practice/>
-      {/* <PrompComp2_1/> */}
-      {/* <PropsComp1_1/> */}
+    <div >
+    <NavBar/>
     </div>
   );
 }
