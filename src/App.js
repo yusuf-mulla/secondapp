@@ -1,11 +1,15 @@
 import React from "react";
-import { NavBar } from "./Component/ComponentLevel/nav/NavBar";
+import { Practice } from "./Component/ComponentLevel/Practice";
+import { SchoolForm } from "./Component/ComponentLevel/SchoolForm";
+import { RouteData } from "./Component/RouteData";
 
 
 function App() {
   return (
     <div >
-    <NavBar/>
+    {/* <RouteData/> */}
+    {/* <SchoolForm/> */}
+    <Practice/>
     </div>
   );
 }
