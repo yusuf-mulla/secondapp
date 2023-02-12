@@ -2,6 +2,7 @@ import React from "react";
 import { Practice } from "./Component/ComponentLevel/Practice";
 import { SchoolForm } from "./Component/ComponentLevel/SchoolForm";
 import { RouteData } from "./Component/RouteData";
+import { ToDo1 } from "./ToDo1";
 
 
 function App() {
@@ -9,7 +10,8 @@ function App() {
     <div >
     {/* <RouteData/> */}
     {/* <SchoolForm/> */}
-    <Practice/>
+    {/* <Practice/> */}
+    <ToDo1/>
     </div>
   );
 }

@@ -1,53 +1,73 @@
-import { Card, CardContent, Grid } from '@mui/material';
-import React, { useState } from 'react';
+import { Button, TextField } from "@mui/material"
+import React, { useState } from "react"
 
-export const Practice = () => {
+export const Practice=()=>{
+  const [text,setText]=useState('')
+  const [toDo,setToDo]=useState([])
+  const [copyToDo,setCopyToDo]=useState([])
+  const [selectIndex,setSelectIndex]=useState(null)
+  const [edit,setEdit]=useState(false)
 
-  const [inputs, setInputs] = useState({
-    fname: "",
-    lname: ""
-  })
-
-  const changeHandle = e => {
-    setInputs({
-      ...inputs,
-      [e.target.name]: e.target.value
-    })
+  const handleAddTask=()=>{
+      if(edit){
+        const editedTask=toDo.map((elem,index)=>index=== selectIndex?text:elem)
+        setToDo(editedTask);
+        setCopyToDo(editedTask);
+        setText("");
+        setEdit(false)
+        }else{
+        if (!text.trim()) return
+          setToDo([...toDo,text]);
+          setCopyToDo([...toDo,text])
+          setText("");
+  }}
+  const handleDeleteTask=(item,index)=>{
+      const remainTask=toDo.filter((elem,ind)=>index !=ind)
+      setToDo(remainTask);
   }
-
-  const submitHandle = e => {
-    // const obj = {
-    //     FirstName: [e.target.name],
-    //     LastName: [e.target.value]
-
-    //   };
-    //   setInputs([...inputs, obj]);
-    e.preventDefault()
-    console.log(inputs)
+  const handleSerachTask=(value)=>{
+    const searchItem=copyToDo.filter((elem)=>
+    elem.toUpperCase().includes(value.toUpperCase()))
+    setToDo(searchItem)
   }
-  
-  return (
-    <form onSubmit={submitHandle}>
-      <input type="text" name="fname" value={inputs.fname} onChange={changeHandle} />
-      <input type="text " name="lname" value={inputs.lname} onChange={changeHandle} />
-      <button type="submit">Submit</button>
-      
-      <Grid container>
-        {inputs.map((item,index) => {
-          return (
-            <Grid item xs={4}>
-              <Card>
-                <CardContent>
-                  <h3>Name :{item.inputs}</h3>
-                  {/* <h3>Mobile No :{item.LastName}</h3> */}
-                
-                </CardContent>
-              </Card>
-            </Grid>
-          );
-        })}
-      </Grid>
-    
-    </form>
-  );
+const handleEditTask=(item,ind)=>{
+    setText(item)
+    setSelectIndex(ind)
+    setEdit(true)
+
+}
+
+  return(
+    <div>
+      <h1>Its a TO DO LIST</h1>
+      <TextField type="text" placeholder="search here..."
+      onChange={(e)=>handleSerachTask(e.target.value)}
+      />
+      <TextField type="text" placeholder="To Do List" 
+      value={text}
+      onChange={(e)=>setText(e.target.value)}
+      /> {''}
+
+      <Button variant="contained" color="success"
+      onClick={()=>handleAddTask()}
+      >{edit ? "Edit" : "Add"} Task </Button>
+     <ol>
+      {toDo.map((item,index)=>{
+        return(
+          <li key={index}>
+              {item} {""}
+              <Button color="success" 
+              onClick={()=>handleEditTask(item,index)}
+              >Edit</Button>
+              <Button  color="success" 
+              onClick={()=>handleDeleteTask(item,index)}
+              >Delete</Button>
+          </li>
+        )
+      })}
+     
+     </ol>
+
+    </div>
+  )
 }
