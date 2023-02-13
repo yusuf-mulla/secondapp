@@ -10,8 +10,8 @@ function App() {
     <div >
     {/* <RouteData/> */}
     {/* <SchoolForm/> */}
-    {/* <Practice/> */}
-    <ToDo1/>
+    <Practice/>
+    {/* <ToDo1/> */}
     </div>
   );
 }
