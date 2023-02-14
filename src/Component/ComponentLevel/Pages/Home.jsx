@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import {Grid,Card,CardContent,Button,TextField,Badge,} from "@mui/material";
 import axios from "axios";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { useNavigate } from "react-router-dom";
+import { addQuantity, handleDecremenyQty, handleIncrementQty } from "./Utility";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 export const Home = () => {
   const [data, setData] = useState([]);
@@ -9,10 +13,20 @@ export const Home = () => {
   const [addtoCart, setAddtoCart] = useState([]);
   const [copyData, setCopyData] = useState([]);
 
+  const [category, setCategory] = useState([]);
+
+  const [search, setsearch] = useState("");
+
+  const navigate = useNavigate();
+
   async function addData() {
     const getData = await axios.get("https://fakestoreapi.com/products");
-    setData(getData.data);
-    setCopyData(getData.data);
+    setData(addQuantity(getData.data));
+    setCopyData(addQuantity(getData.data));
+
+    const res = await axios.get("https://fakestoreapi.com/products/categories");
+    console.log(res);
+    setCategory([...res.data, "All"]);
   }
   const handleAddtoCart = (item) => {
     const duplicateCart = addtoCart.some((elem) => elem.id == item.id);
@@ -21,12 +35,12 @@ export const Home = () => {
     }
   };
 
-  const handleFilter = (value) => {
-    const searchData = copyData.filter((item) =>
-      item.title.toUpperCase().includes(value.toUpperCase())
-    );
-    setData(searchData);
-  };
+  // const handleFilter = (value) => {
+  //   const searchData = copyData.filter((item) =>
+  //     item.title.toUpperCase().includes(value.toUpperCase())
+  //   );
+  //   setData(searchData);
+  // };
 
   const handleCatageryMen = (userCatagory) => {
     if ("All" == userCatagory) {
@@ -38,57 +52,85 @@ export const Home = () => {
       setData(searchCatagery);
     }
   };
- 
+  const handleNavigate = (item) => {
+    navigate("./detail", { state: item });
+    console.log(item);
+  };
+
+  const handleIncrement = (id) => {
+    const res = handleIncrementQty(copyData, id);
+    setData(res)
+    setCopyData(res)
+  };
+  const handleDecrement = (id) => {
+    const res = handleDecremenyQty(copyData, id);
+    setData(res)
+    setCopyData(res)
+  };
+
   useEffect(() => {
     addData();
   }, []);
 
+  useEffect(() => {
+    const searchData = copyData.filter((item) =>
+      item.title.toUpperCase().includes(search.toUpperCase())
+    );
+    setData(searchData);
+    // console.log(search);
+  }, [search]);
+
   return (
     <div>
-
       <Grid container spacing={3} style={{ marginTop: 0 }}>
-        <Grid item xs={2} className="Button-Container">
-          <Button
-            variant="contained"
-            onClick={() => handleCatageryMen("men's clothing")}
-          >
-            Mens
-          </Button>
-        </Grid>
-        <Grid item xs={2} className="Button-Container">
+        {category.map((item) => {
+          return (
+            <Grid item xs={item == "All" ? 1 : 2}>
+              <Button
+                variant="contained"
+                className="Button-Container"
+                onClick={() => handleCatageryMen(item)}
+              >
+                {item}
+              </Button>
+            </Grid>
+          );
+        })}
+
+        {/* <Grid item xs={2} className="Button-Container">
           <Button
             variant="contained"
             onClick={() => handleCatageryMen("women's clothing")}
           >
             Womens
           </Button>
-        </Grid>
-        <Grid item xs={2} className="Button-Container">
+        </Grid> */}
+        {/* <Grid item xs={2} className="Button-Container">
           <Button
             variant="contained"
             onClick={() => handleCatageryMen("electronics")}
           >
             Electric
           </Button>
-        </Grid>
-        <Grid item xs={2} className="Button-Container">
+        </Grid> */}
+        {/* <Grid item xs={2} className="Button-Container">
           <Button
             variant="contained"
             onClick={() => handleCatageryMen("jewelery")}
           >
             Jewllory
           </Button>
-        </Grid>
-        <Grid item xs={1} className="Button-Container">
+        </Grid> */}
+        {/* <Grid item xs={1} className="Button-Container">
           <Button variant="contained" onClick={() => handleCatageryMen("All")}>
             All
           </Button>
-        </Grid>
+        </Grid> */}
         <Grid item xs={2} className="Button-Container">
           <TextField
             label="Search"
             fullWidth
-            onChange={(e) => handleFilter(e.target.value)}
+            onChange={(e) => setsearch(e.target.value)}
           />
         </Grid>
 
@@ -101,8 +143,8 @@ export const Home = () => {
         </Grid>
         {data.map((item, index) => {
           return (
-            <Grid item xs={3} key={index}>
-              <Card sx={{ height: 400 }}>
+            <Grid item xs={12} md={3} key={index}>
+              <Card sx={{ height: 450 }}>
                 <CardContent>
                   <img
                     src={item.image}
@@ -111,11 +153,30 @@ export const Home = () => {
                     style={{ position: "relative", left: 50 }}
                   />
                   <h3>
-                    Title:{item.title.substring(0, 30)}{" "}
-                    {item.title.length > 30 && "..."}
+                    Title:{item.title.substring(0, 22)}{" "}
+                    {item.title.length > 22 && "..."}
                   </h3>
                   <h4>Prise: $ {item.price}</h4>
-                  <Button variant="contained" color="error">
+                  <h2>
+                    <span>
+                      <RemoveIcon className="add-icone" 
+                      onClick={()=>handleDecrement(item.id)}
+                
+                      />
+                    </span>
+                    {item.userQuantity}
+                    <span>
+                      <AddIcon className="add-icone" 
+                      onClick={()=>handleIncrement(item.id)} />
+                    </span>
+                  </h2>
+
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => handleNavigate(item)}
+                  >
+                    {" "}
                     Detail
                   </Button>
                   <Button

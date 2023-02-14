@@ -1,4 +1,5 @@
 import React from "react";
+import './App.css'
 import { Practice } from "./Component/ComponentLevel/Practice";
 import { SchoolForm } from "./Component/ComponentLevel/SchoolForm";
 import { RouteData } from "./Component/RouteData";

@@ -5,6 +5,7 @@ import { Home } from "./ComponentLevel/Pages/Home";
 import { About } from "./ComponentLevel/Pages/About";
 import { Blog } from "./ComponentLevel/Pages/Blog";
 import { ContactUs } from "./ComponentLevel/Pages/ContactUs";
+import {Detail} from "./ComponentLevel/Pages/Detail"
 export const RouteData = () => {
   return (
     <div>
@@ -16,6 +17,7 @@ export const RouteData = () => {
           <Route path="/about" element={<About />} />
           <Route path="blog" element={<Blog />} />
           <Route path="/contact" element={<ContactUs />} />
+          <Route path="/detail" element={<Detail />} />
         </Routes>
       </BrowserRouter>
     </div>
