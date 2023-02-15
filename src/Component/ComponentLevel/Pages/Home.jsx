@@ -160,8 +160,8 @@ export const Home = () => {
                   <h2>
                     <span>
                       <RemoveIcon className="add-icone" 
-                      onClick={()=>handleDecrement(item.id)}
-                
+                      onClick={()=> item.userQuantity>0&& handleDecrement(item.id)}
+
                       />
                     </span>
                     {item.userQuantity}

@@ -1,46 +1,27 @@
-import { Button, TextField } from '@mui/material'
-import React, { useState } from 'react'
+import { Button } from '@mui/material'
+import React from 'react'
+import { useState } from 'react'
 
 export const Practice = () => {
-    const [text,setText]=useState('')
-    const [toDo,setToDo]=useState([])
+    const [count,setCount]=useState(0)
 
-    const [copyToDo,setCopyToDo]=useState([])
+    const handleIncrese=(val)=>{
+        setCount(count+val)
+    }
 
-
-
-        const handleAddTask=()=>{
-            if (!text.trim())return
-            setToDo([...toDo,text])
-            setCopyToDo([...toDo,text])
-            setText('')
-        }
-
-        const handleDelete=((item,index)=>{
-            const remainTask=toDo.filter((elem,ind)=> index!=ind)
-            setToDo(remainTask)
-        })
   return (
     <div>
-        <TextField placeholder='To Do List'
-        onChange={(e)=>setText(e.target.value)}
-        value={text}
-        />
+        <h1>Counter</h1>
+
         <Button variant='contained' color='success'
-        onClick={()=>handleAddTask()}
-        >Add Task</Button>
+        onClick={()=>handleIncrese(+1)}
+        >Increse</Button>
+        <h1>{count}</h1>
+        <Button variant='contained' color='error'
+        onClick={()=>handleIncrese(-1)}
+        disabled={count == 0}
+        >Decrese</Button>
 
-
-        <ol>
-            {toDo.map((item,index)=>{
-                return(
-                    <li>{item}{' '} 
-                    <Button color='error'
-                    onClick={()=>handleDelete(item,index)}
-                    >Delete</Button></li>
-                )
-            })}
-        </ol>
     </div>
   )
 }
