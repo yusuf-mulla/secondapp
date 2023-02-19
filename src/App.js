@@ -6,12 +6,14 @@ import { RouteData } from "./Component/RouteData";
 import { ToDo1 } from "./ToDo1";
 
 
+
 function App() {
   return (
     <div >
-    {/* <RouteData/> */}
+    <RouteData/>
+
     {/* <SchoolForm/> */}
-    <Practice/>
+    {/* <Practice/> */}
     {/* <ToDo1/> */}
     </div>
   );
