@@ -2,7 +2,8 @@ const initialState = {
   cart: [],
   product:[],
   category:[],
-  counterNew:0
+  counterNew:0,
+  loader:false
 };
 export const ProductReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -30,6 +31,18 @@ export const ProductReducer = (state = initialState, action) => {
         counterNew: action.payload,
       };
       break;
+      case "LOADER_ACTIVATE":
+        return{
+          ...state,
+          loader:true,
+        }
+        break;
+        case "LOADER_DEACTIVATE":
+          return{
+            ...state,
+            loader:false,
+          }
+          break;
   }
   return state;
 };

@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+
 export const addQuantity = (arr) => {
   const res = arr.map((item) => {
     return { ...item, Quantity: 10, userQuantity: 0 };
@@ -28,4 +30,16 @@ export const handleDecremenyQty=(arr,id)=>{
    }
     })
     return res
+}
+export const activateLoader=(dispatch)=>{
+  dispatch({
+    type:"LOADER_ACTIVATE",
+    payload:true
+  })
+}
+export const deactivateLoader=(dispatch)=>{
+  dispatch({
+    type:"LOADER_DEACTIVATE",
+    payload:false
+  })
 }

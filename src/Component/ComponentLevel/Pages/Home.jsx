@@ -3,7 +3,7 @@ import {Grid,Card,CardContent,Button,TextField,Badge,} from "@mui/material";
 import axios from "axios";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useNavigate } from "react-router-dom";
-import { addQuantity, handleDecremenyQty, handleIncrementQty } from "./Utility";
+import { activateLoader, addQuantity, deactivateLoader, handleDecremenyQty, handleIncrementQty } from "./Utility";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,18 +21,21 @@ export const Home = () => {
 
   const [search, setsearch] = useState("");
 
-  console.log("select", select);
+  // console.log("select", select);
 
   async function addData() {
     if (select.ProductReducer.product.length > 0) {
       setData(select.ProductReducer.product);
       setCopyData(select.ProductReducer.product);
     } else {
+      activateLoader(dispatch)
       const getData = await axios.get("https://fakestoreapi.com/products");
       dispatch({
         type: "ADD_PRODUCT",
         payload: addQuantity(getData.data),
       });
+      console.log(select);
+      deactivateLoader(dispatch)
       setData(addQuantity(getData.data));
       setCopyData(addQuantity(getData.data));
     }
@@ -42,7 +45,8 @@ export const Home = () => {
       const res = await axios.get(
         "https://fakestoreapi.com/products/categories"
       );
-      console.log(res);
+      // console.log(res);
+      
       dispatch({
         type: "ADD_CATEGORY",
         payload: [...res.data, "All"],
@@ -50,7 +54,7 @@ export const Home = () => {
       setCategory([...res.data, "All"]);
     }
   }
-  console.log("catogery", ProductReducer);
+  // console.log("catogery", ProductReducer);
 
   const handleAddtoCart = (item) => {
     const duplicateCart = addtoCart.some((elem) => elem.id == item.id);
@@ -82,7 +86,7 @@ export const Home = () => {
   };
   const handleNavigate = (item) => {
     navigate("./detail", { state: item });
-    console.log(item);
+    // console.log(item);
   };
 
   const handleIncrement = (id) => {
