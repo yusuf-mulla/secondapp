@@ -13,6 +13,7 @@ export const Home = () => {
   const dispatch = useDispatch();
   const select = useSelector((state) => state);
   const ProductReducer = select.ProductReducer;
+  const searchData=select.ProductReducer.searchData
 
   const [data, setData] = useState(select.ProductReducer.product);
   const [copyData, setCopyData] = useState(select.ProductReducer.product);
@@ -97,12 +98,17 @@ export const Home = () => {
       type: "ADD_PRODUCT",
       payload: res,
     });
+    dispatch({
+      type: "SEARCH_DATA",
+      payload: res,
+    });
   };
   const handleDecrement = (id) => {
     const res = handleDecremenyQty(copyData, id);
     setData(res);
     setCopyData(res);
   };
+
 
   useEffect(() => {
     addData();

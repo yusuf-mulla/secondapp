@@ -3,7 +3,8 @@ const initialState = {
   product:[],
   category:[],
   counterNew:0,
-  loader:false
+  loader:false,
+  searchData:"",
 };
 export const ProductReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -41,6 +42,12 @@ export const ProductReducer = (state = initialState, action) => {
           return{
             ...state,
             loader:false,
+          }
+          break;
+        case "SEARCH_DATA":
+          return{
+            ...state,
+            searchData: action.payload
           }
           break;
   }
