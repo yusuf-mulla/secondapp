@@ -22,7 +22,7 @@ export const Home = () => {
 
   const [search, setsearch] = useState("");
 
-  // console.log("select", select);
+  console.log("search", search);
 
   async function addData() {
     if (select.ProductReducer.product.length > 0) {
@@ -35,7 +35,7 @@ export const Home = () => {
         type: "ADD_PRODUCT",
         payload: addQuantity(getData.data),
       });
-      console.log(select);
+      // console.log(select);
       deactivateLoader(dispatch)
       setData(addQuantity(getData.data));
       setCopyData(addQuantity(getData.data));
@@ -110,17 +110,28 @@ export const Home = () => {
   };
 
 
+
   useEffect(() => {
     addData();
   }, []);
 
+
+  ////////////////// home search baar filter /////////////////
   useEffect(() => {
     const searchData = copyData.filter((item) =>
-      item.title.toUpperCase().includes(search.toUpperCase())
+    item.title.toUpperCase().includes(search.toUpperCase())
     );
     setData(searchData);
     // console.log(search);
   }, [search]);
+
+  ///////////  NavBar search filter method  /////////////////
+  useEffect(() => {
+    const res = copyData.filter((item) =>
+      item.title.toUpperCase().includes(searchData.toUpperCase())
+    );
+    setData(res);
+  }, [searchData]);
 
   return (
     <div>

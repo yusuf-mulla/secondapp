@@ -6,16 +6,15 @@ import { red } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 
 export const NavBar = () => {
-  const select=useSelector((state)=>state)
 const dispatch=useDispatch()
+// console.log(select);
   const handleSearch=(e)=>{
     dispatch({
-      type:'SEARCH_DATA',
+      type:'SEARCH_DATA_TAKE',
       payload:e.target.value
     })
-    // console.log(e.target.value);
   }
-console.log(select.ProductReducer.searchData);
+// console.log(select.ProductReducer.searchData);
   return (
      <div className="navbar">
       <div className="Logo-container">

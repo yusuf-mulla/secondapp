@@ -16,11 +16,11 @@ function App() {
 
   return (
     <div >
-    {loader && <Loader/>}
-    <RouteData/>
+    {/* {loader && <Loader/>} */}
+    {/* <RouteData/> */}
 
     {/* <SchoolForm/> */}
-    {/* <Practice/> */}
+    <Practice/>
     {/* <ToDo1/> */}
     </div>
   );

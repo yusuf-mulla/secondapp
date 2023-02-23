@@ -8,7 +8,11 @@ export const ContactUs=()=>{
     const dispatch=useDispatch()
     const carData=select.carReducer.carData
     const [data,setData]=useState([])
+    const [copyData,setCopyData]=useState([])
     const [page,setPage]=useState(8)
+    
+    // console.log("copydata", data);
+    const searchData=select.ProductReducer.searchData
 
     const getCartData=async()=>{
         const res = await axios.get("https://myfakeapi.com/api/cars/")
@@ -18,15 +22,23 @@ export const ContactUs=()=>{
         })
         // console.log(res);
         // console.log(res.data.cars);
-    }
-
-    useEffect(()=>{
+        
+        setCopyData(...data,carData)
+      }
+      
+      useEffect(()=>{
         setData(carData)
-    },[carData])
-
-    useEffect(()=>{
+      },[carData])
+      
+      useEffect(()=>{
         getCartData()
-    },[])
+      },[])
+      
+      useEffect (()=>{
+        const res=copyData.filter((item)=>
+        item.car.toUpperCase().includes(searchData.toUpperCase()))
+        setData(res)
+},[searchData])
     return(
         <div>
            <h1>Contact Us</h1> 

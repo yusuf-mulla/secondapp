@@ -44,7 +44,7 @@ export const ProductReducer = (state = initialState, action) => {
             loader:false,
           }
           break;
-        case "SEARCH_DATA":
+        case "SEARCH_DATA_TAKE":
           return{
             ...state,
             searchData: action.payload
