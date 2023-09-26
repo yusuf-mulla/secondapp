@@ -22,7 +22,7 @@ export const Home = () => {
 
   const [search, setsearch] = useState("");
 
-  console.log("search", search);
+  // console.log("search", select);
 
   async function addData() {
     if (select.ProductReducer.product.length > 0) {
@@ -40,6 +40,7 @@ export const Home = () => {
       setData(addQuantity(getData.data));
       setCopyData(addQuantity(getData.data));
     }
+    
     if (select.ProductReducer.product.length > 0) {
       setCategory(select.ProductReducer.category);
     } else {
@@ -59,6 +60,7 @@ export const Home = () => {
 
   const handleAddtoCart = (item) => {
     const duplicateCart = addtoCart.some((elem) => elem.id == item.id);
+    console.log(duplicateCart);
     if (!duplicateCart) {
       setAddtoCart([...addtoCart, item]);
       dispatch({
@@ -109,14 +111,12 @@ export const Home = () => {
     setCopyData(res);
   };
 
-
-
   useEffect(() => {
     addData();
   }, []);
 
 
-  ////////////////// home search baar filter /////////////////
+  ////////////////// home search baar for filter /////////////////
   useEffect(() => {
     const searchData = copyData.filter((item) =>
     item.title.toUpperCase().includes(search.toUpperCase())
@@ -125,7 +125,7 @@ export const Home = () => {
     // console.log(search);
   }, [search]);
 
-  ///////////  NavBar search filter method  /////////////////
+  ///////////  NavBar search for filter method  /////////////////
   useEffect(() => {
     const res = copyData.filter((item) =>
       item.title.toUpperCase().includes(searchData.toUpperCase())

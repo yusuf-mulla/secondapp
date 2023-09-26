@@ -7,7 +7,7 @@ import { Increment } from "./Increment";
 export const Blog=()=>{
     const select=useSelector((state)=>state)
     const count=select.CountReducer.count
-    console.log(select.CountReducer.count);
+    console.log("counter",select.CountReducer.count);
     
     return(
         <div>

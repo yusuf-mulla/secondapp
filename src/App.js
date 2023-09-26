@@ -6,21 +6,23 @@ import { Practice } from "./Component/ComponentLevel/Practice";
 import { SchoolForm } from "./Component/ComponentLevel/SchoolForm";
 import { RouteData } from "./Component/RouteData";
 import { ToDo1 } from "./ToDo1";
-
+import {RowPagination} from "./Component/ComponentLevel/RowPagination"
+import { ApiPagination  } from "./Component/ComponentLevel/ApiPagination ";
 
 
 function App() {
   const select=useSelector((state)=>state)
   const loader=select.ProductReducer.loader
-  console.log(select);
+
 
   return (
     <div >
     {/* {loader && <Loader/>} */}
-    {/* <RouteData/> */}
-
+    <RouteData/>
+      {/* <RowPagination/> */}
+      {/* <ApiPagination /> */}
     {/* <SchoolForm/> */}
-    <Practice/>
+    {/* <Practice/> */}
     {/* <ToDo1/> */}
     </div>
   );
